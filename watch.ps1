@@ -13,6 +13,7 @@ inotifywait -q -m -e CLOSE_WRITE $IN_DIR | Foreach-Object {
     $parts = $_.Split(" ")
     $file_name = $parts[2..$parts.Count] | Join-String -Separator "\ "
 
+    Write-Information "Got $file_name"
     if([System.IO.Path]::GetExtension($file_name) -eq ".pdf") {   
         if ($previous_file_name -eq $null) {
             $previous_file_name = $file_name
