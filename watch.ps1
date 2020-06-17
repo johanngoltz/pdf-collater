@@ -11,10 +11,15 @@ if ($IN_DIR -eq $OUT_DIR) {
 
 inotifywait -q -m -e CLOSE_WRITE $IN_DIR | Foreach-Object {
     $parts = $_.Split(" ")
-    $file_name = $parts[2..$parts.Count] | Join-String -Separator "\ "
 
-    Write-Information "Got $file_name"
-    if([System.IO.Path]::GetExtension($file_name) -eq ".pdf") {   
+    if ($parts.Count -ne 3) {
+        throw "Could not process event $_ - Does the file name contain spaces?"
+    }
+
+    $file_name = $parts[2]
+
+    Write-Information "Got $file_name`: $parts"
+    if ([System.IO.Path]::GetExtension($file_name) -eq ".pdf") {   
         if ($previous_file_name -eq $null) {
             $previous_file_name = $file_name
         } else {
@@ -22,7 +27,7 @@ inotifywait -q -m -e CLOSE_WRITE $IN_DIR | Foreach-Object {
             $file_name = Join-Path $IN_DIR $file_name
             $previous_file_name = Join-Path $IN_DIR $previous_file_name
 
-            Write-Information Executing pdftk A=$previous_file_name B=$file_name shuffle A Bend-1 output $out_file
+            Write-Information "Executing pdftk A=$previous_file_name B=$file_name shuffle A Bend-1 output $out_file"
             pdftk A=$previous_file_name B=$file_name shuffle A Bend-1 output $out_file
 
             Remove-Item $file_name, $previous_file_name
