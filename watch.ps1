@@ -27,7 +27,7 @@ inotifywait -q -m -e CLOSE_WRITE $IN_DIR | Foreach-Object {
 
             Write-Information "Executing pdftk A=$previous_file_name B=$file_name shuffle A Bend-1 output $out_file"
             # todo does not ask before overwriting
-            ./pdftk A=$previous_file_name B=$file_name shuffle A Bend-1 output $out_file
+            pdftk A=$previous_file_name B=$file_name shuffle A Bend-1 output $out_file
 
             if (-not $?) {
                 throw "pdftk errored; exiting."
