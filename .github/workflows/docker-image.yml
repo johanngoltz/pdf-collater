@@ -18,5 +18,6 @@ jobs:
       uses: docker/build-push-action@v1.1.0
       with:
         repository: johanngoltz/pdf-collater
+        tags: latest
         username: johanngoltz
-        password: a357fcc6-e5d3-4688-9c4a-858e497f4a12
+        password: ${{ secrets.docker_hub_token }}
