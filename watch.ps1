@@ -1,5 +1,6 @@
 $IN_DIR = "/files-in"
 $OUT_DIR = "/files-out"
+$InformationPreference = "Continue"
 
 $previous_file_name = $null
 
