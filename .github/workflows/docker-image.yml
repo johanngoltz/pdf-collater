@@ -14,5 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag pdf-collater:$(date +%s)
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v1.1.0
+      with:
+        repository: johanngoltz/pdf-collater
+        username: johanngoltz
+        password: a357fcc6-e5d3-4688-9c4a-858e497f4a12
